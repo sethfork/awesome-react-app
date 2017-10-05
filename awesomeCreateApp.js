@@ -15,8 +15,12 @@ const terminalOpts = {
 }
 
 const createApp = folderName => {
-  spawn('create-react-app', [folderName], terminalOpts)
+  checkPackageInstalled('create-react-app')
+  .then(() => 
+    spawn('create-react-app', [folderName], terminalOpts)
     .then( () => showQuestions(folderName))
+    //TODO ask for install the package
+  ).catch(() => console.log(`${emoji.get('scream_cat')} create-react-app is not installed`))
 }
 
 const showQuestions = folderName =>
@@ -45,6 +49,10 @@ const showEndProcessText = () => {
   console.log(`        ${emoji.get('link')}   ${chalk.blue('http://www.ifactory.com.br')}`)
   console.log('\n\n')
   Promise.resolve()
+}
+
+const checkPackageInstalled = packageName => {
+  return exec(`npm list -g ${packageName}`)
 }
 
 module.exports = createApp
