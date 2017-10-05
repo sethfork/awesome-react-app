@@ -17,6 +17,7 @@ const terminalOpts = {
 const createApp = folderName => {
   spawn('create-react-app', [folderName], terminalOpts)
     .then( () => showQuestions(folderName))
+    .catch(console.error)
 }
 
 const showQuestions = folderName =>
